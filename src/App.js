@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { createClient, Provider, chain } from 'wagmi'
+import { providers } from 'ethers'
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
+import Layout from './components/Layout'
 
 function App() {
+  //List of chains from wagmi
+  const chains = chain
+
+  const client = createClient({
+    // AutoConnect must be true due to a bug in Wagmi not assigning Client.connector properly otherwise, will try and make a pull request on their github to fix
+    autoConnect: true,
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Provider client={client}>
+      <Layout />
+    </Provider>
+  )
 }
 
-export default App;
+export default App
