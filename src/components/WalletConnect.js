@@ -6,7 +6,7 @@ import AccountInfo from './AccountInfo'
 
 const WalletConnect = () => {
   const [showModal, setShowModal] = useState(false)
-  const { activeConnector } = useConnect()
+  const { activeConnector } = useConnect({ chainId: 137 })
   const network = useNetwork({
     onSettled(data, error) {
       console.log('Network CHanged')

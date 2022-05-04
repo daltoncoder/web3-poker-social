@@ -1,6 +1,5 @@
 import React from 'react'
 import { useConnect } from 'wagmi'
-
 const EthersTest = () => {
   const {
     activeConnector,
