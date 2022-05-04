@@ -30,7 +30,7 @@ const UserBalance = ({ account }) => {
     <Container>
       <div>{chipBalance.data.toNumber()} CHIPS </div>
       <div> {' | '} </div>
-      <div> {usdcBalance.data.toNumber()} USDC</div>
+      <div> {usdcBalance.data.div(1000000).toNumber()} USDC</div>
     </Container>
   )
 }
