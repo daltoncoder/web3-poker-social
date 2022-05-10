@@ -2,8 +2,8 @@ import React, { useCallback, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useContractRead, useAccount, erc20ABI } from 'wagmi'
 import cashierAbi from '../abis/cashier.json'
-import BuyForm from './BuyForm'
-import SellForm from './SellForm'
+import BuyForm from './Cashier/BuyForm'
+import SellForm from './Cashier/SellForm'
 
 const Cashier = () => {
   const [chainData, setChainData] = useState({})

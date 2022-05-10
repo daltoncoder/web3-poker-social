@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContractRead, erc20ABI } from 'wagmi'
-import cashierAbi from '../abis/cashier.json'
+import cashierAbi from '../../abis/cashier.json'
 import styled from 'styled-components'
 
 const UserBalance = ({ account }) => {

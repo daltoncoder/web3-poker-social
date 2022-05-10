@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Switch, Route } from 'react-router-dom'
 
-import Header from './Header'
+import Navbar from './Navbar'
 import Cashier from './Cashier'
 import JoinGame from './JoinGame'
 import HostGame from './HostGame'
@@ -11,7 +11,7 @@ import CreateAccount from './CreateAccount'
 const Layout = () => {
   return (
     <Container>
-      <Header />
+      <Navbar />
       <Body>
         <Switch>
           <Route path='/join'>

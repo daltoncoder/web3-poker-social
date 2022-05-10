@@ -44,9 +44,8 @@ const WalletConnect = () => {
       )}
       {!activeConnector && (
         <Button onClick={() => setShowModal(true)}>Connect Wallet</Button>
-      )}
+      ) || account.isSuccess && <AccountInfo account={account} />}
       {showModal && <WalletModal setShowModal={setShowModal} />}
-      {account.isSuccess && <AccountInfo account={account} />}
     </>
   )
 }

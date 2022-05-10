@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { erc20ABI, useContractWrite, useProvider } from 'wagmi'
 import { BigNumber } from 'ethers'
-import cashierAbi from '../abis/cashier.json'
+import cashierAbi from '../../abis/cashier.json'
 
-const BuyForm = ({ userUsdc, updateValues }) => {
+const SellForm = ({ userChips, updateValues }) => {
   const [value, setValue] = useState('')
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('unapproved')
@@ -17,8 +17,8 @@ const BuyForm = ({ userUsdc, updateValues }) => {
     console.log(rounded)
     if (rounded < 0) {
       setValue('')
-    } else if (rounded > userUsdc.data.div(1000000).toNumber()) {
-      setValue(userUsdc.data.div(1000000).toNumber())
+    } else if (rounded > userChips.data.toNumber()) {
+      setValue(userChips.data.toNumber())
     } else {
       if (rounded === 0) {
         setValue('')
@@ -28,9 +28,9 @@ const BuyForm = ({ userUsdc, updateValues }) => {
     }
   }
 
-  const approveUsdc = useContractWrite(
+  const approveChips = useContractWrite(
     {
-      addressOrName: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
+      addressOrName: '0x4e5b6ffbf3C249435be2730AdDBAA7AD1D5e2E16',
       contractInterface: erc20ABI,
     },
     'approve',
@@ -39,7 +39,7 @@ const BuyForm = ({ userUsdc, updateValues }) => {
         console.log(error)
         setErrors({
           ...errors,
-          buyTokens:
+          sellTokens:
             'There was an error approving your transaction please try again',
         })
         setValue('')
@@ -56,7 +56,7 @@ const BuyForm = ({ userUsdc, updateValues }) => {
             })
             .catch((e) => {
               setErrors({
-                buyTokens:
+                sellTokens:
                   'There was an error with your approval please try again',
               })
               setStatus('unapproved')
@@ -65,38 +65,38 @@ const BuyForm = ({ userUsdc, updateValues }) => {
       },
     }
   )
-
-  const buyChips = () => {
+  const sellChips = () => {
     if (value === '' || value === 0) {
       return
     }
+
     if (status === 'success') {
       setStatus('unapproved')
     }
 
     if (status === 'approved') {
       setStatus('buying')
-      writeBuyChips.write({
+      writeSellChips.write({
         args: [value],
       })
     } else {
       setStatus('approving')
-      approveUsdc.write({
+      approveChips.write({
         args: [
           '0x4e5b6ffbf3C249435be2730AdDBAA7AD1D5e2E16',
-          BigNumber.from(value).mul(10 ** 6),
+          BigNumber.from(value),
         ],
       })
     }
   }
 
-  const writeBuyChips = useContractWrite(
+  const writeSellChips = useContractWrite(
     {
       addressOrName: '0x4e5b6ffbf3C249435be2730AdDBAA7AD1D5e2E16',
       contractInterface: cashierAbi,
       signerOrProvider: provider,
     },
-    'getChips',
+    'exchangeChips',
     {
       onSettled(data) {
         if (data) {
@@ -111,9 +111,10 @@ const BuyForm = ({ userUsdc, updateValues }) => {
               }
             })
             .catch((error) => {
+              console.log(error)
               setStatus('approved')
               setErrors({
-                buyTokens:
+                sellTokens:
                   'There was an error with your transaction Please try again',
               })
             })
@@ -123,21 +124,22 @@ const BuyForm = ({ userUsdc, updateValues }) => {
         console.log(error)
         setErrors({
           ...errors,
-          buyTokens:
+          sellTokens:
             'There was an error completing your transaction please try again',
         })
+        setValue('')
         setStatus('approved')
       },
       overrides(data) {
         //Was going over gas estimations causing txn to fail. Quick fix but we may want to think of a better way to do this like if txn fails prompt the user to raise gas limits so we have more accurate estimations
-        return { gasLimit: data.gasLimit.mul(1.5) }
+        return { gaslimit: data.gasLimit.mul(1.5) }
       },
     }
   )
 
   return (
     <>
-      <h2>Buy CHIPS with USDC</h2>
+      <h2>Sell CHIPS with USDC</h2>
       <Input
         type='number'
         onChange={(e) => onInputChange(e)}
@@ -149,15 +151,15 @@ const BuyForm = ({ userUsdc, updateValues }) => {
           Txn approved click again to complete
         </div>
       )}
-      {errors.buyTokens && (
-        <div style={{ color: 'red' }}>{errors.buyTokens}</div>
+      {errors.sellTokens && (
+        <div style={{ color: 'red' }}>{errors.sellTokens}</div>
       )}
       <Button
-        onClick={buyChips}
+        onClick={sellChips}
         disabled={status === 'approving' || status === 'buying'}
       >
         {!value || status === 'approved' || status === 'success'
-          ? 'Buy CHIPS'
+          ? 'Sell CHIPS'
           : status === 'unapproved' && value
           ? 'Approve'
           : status === 'approving'
@@ -184,4 +186,4 @@ const Button = styled.button`
   margin-top: 0.5em;
 `
 
-export default BuyForm
+export default SellForm

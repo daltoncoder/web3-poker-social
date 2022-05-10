@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { useContractRead, useProvider } from 'wagmi'
 import { utils } from 'ethers'
-import accountAbi from '../abis/account.json'
+import accountAbi from '../../abis/account.json'
 import UserBalance from './UserBalance'
 
 const AccountInfo = ({ account }) => {
