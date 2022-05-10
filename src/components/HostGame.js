@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 import {
   useContractRead,
   useContractWrite,
@@ -145,14 +145,15 @@ const HostGame = () => {
   )
 }
 
-const Container = styled.div`
+const Container = tw.div`
   margin-top: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: auto;
 `
-const Button = styled.button`
+const Button = tw.
+button`
   color: white;
   background: #4786ff;
   border: 1px solid #4786ff;
@@ -160,13 +161,13 @@ const Button = styled.button`
   font-size: 2em;
   margin-top: 0.5em;
 `
-const GameInfo = styled.div`
+const GameInfo = tw.div`
   display: flex;
   flex-direction: row;
   width: 70%;
   padding-left: 30%;
 `
-const GameId = styled.div`
+const GameId = tw.div`
   display: flex;
   flex-direction: column;
   font-size: 1.5rem;

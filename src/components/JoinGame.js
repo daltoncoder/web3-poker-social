@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 
 const JoinGame = () => {
   return (
@@ -13,7 +13,7 @@ const JoinGame = () => {
   )
 }
 
-const Container = styled.div`
+const Container = tw.div`
   display: flex;
   flex-direction: column;
   width: auto;
@@ -21,7 +21,8 @@ const Container = styled.div`
   font-size: 1.5rem;
   padding-top: 5%;
 `
-const Button = styled.button`
+const Button = tw.
+button`
   color: white;
   background: #4786ff;
   border: 1px solid #4786ff;

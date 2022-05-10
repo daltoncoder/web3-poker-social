@@ -1,7 +1,7 @@
 import React from 'react'
 import { useContractRead, erc20ABI } from 'wagmi'
 import cashierAbi from '../../abis/cashier.json'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 
 const UserBalance = ({ account }) => {
   const chipBalance = useContractRead(
@@ -28,14 +28,12 @@ const UserBalance = ({ account }) => {
 
   return (
     <Container>
-      <div>{chipBalance.data.toNumber()} CHIPS </div>
-      <div> {' | '} </div>
-      <div> {usdcBalance.data.div(1000000).toNumber()} USDC</div>
+      <div>{chipBalance.data.toNumber()} CHIPS | {usdcBalance.data.div(1000000).toNumber()} USDC</div>
     </Container>
   )
 }
 
-const Container = styled.div`
+const Container = tw.div`
   display: flex;
 `
 

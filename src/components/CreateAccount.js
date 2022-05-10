@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 import accountAbi from '../abis/account.json'
 import { useSigner, useContractWrite, useConnect } from 'wagmi'
 import { utils } from 'ethers'
@@ -56,33 +56,20 @@ const CreateAccount = () => {
   )
 }
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10%;
-  height: 80%;
-  width: 100%;
-  font-size: 1.5rem;
+const Container = tw.div`
+ 
 `
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+const Form = tw.
+form`
+
 `
 
-const Input = styled.input`
-  font-size: 1.5rem;
+const Input = tw.
+input`
 `
-const Button = styled.button`
-  background: #4786ff;
-  color: white;
-  border: 1px solid #4786ff;
-  border-radius: 5px;
-  font-size: 1.5rem;
-  margin-top: 20px;
-  padding: 10px;
+const Button = tw.
+button`
+ 
 `
 
 export default CreateAccount

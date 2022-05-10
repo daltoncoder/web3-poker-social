@@ -4,6 +4,8 @@ import { useContractRead, useProvider } from 'wagmi'
 import { utils } from 'ethers'
 import accountAbi from '../../abis/account.json'
 import UserBalance from './UserBalance'
+import tw from 'tailwind-styled-components'
+
 
 const AccountInfo = ({ account }) => {
   const history = useHistory()
@@ -42,7 +44,7 @@ const AccountInfo = ({ account }) => {
   }, [data, location.pathname])
 
   return (
-    <>
+    <Container>
       {account.isLoading && <div>Loading Wallet...</div>}
       {account.isError && <div>Error Loading Wallet</div>}
       {account.data?.address &&
@@ -58,8 +60,13 @@ const AccountInfo = ({ account }) => {
             <UserBalance account={account} />
           </div>
         )}
-    </>
+    </Container>
   )
 }
+
+const Container = tw.div`
+  flex
+  flex-row
+`
 
 export default AccountInfo

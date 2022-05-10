@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 import { erc20ABI, useContractWrite, useProvider } from 'wagmi'
 import { BigNumber } from 'ethers'
 import cashierAbi from '../../abis/cashier.json'
@@ -139,7 +139,6 @@ const SellForm = ({ userChips, updateValues }) => {
 
   return (
     <>
-      <h2>Sell CHIPS with USDC</h2>
       <Input
         type='number'
         onChange={(e) => onInputChange(e)}
@@ -173,11 +172,13 @@ const SellForm = ({ userChips, updateValues }) => {
   )
 }
 
-const Input = styled.input`
+const Input = tw.
+input`
   font-size: 1.2rem;
   line-height: 2em;
 `
-const Button = styled.button`
+const Button = tw.
+button`
   color: white;
   background: #4786ff;
   border: 1px solid #4786ff;

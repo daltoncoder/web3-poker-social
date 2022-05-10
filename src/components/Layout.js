@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 import { Switch, Route } from 'react-router-dom'
 
 import Navbar from './Navbar'
@@ -34,14 +34,7 @@ const Layout = () => {
 
 export default Layout
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`
-const Body = styled.div`
-  height: 80vh;
-  width: 100%;
+const Container = tw.div``
+const Body = tw.div`
+  m-auto max-w-screen-lg
 `

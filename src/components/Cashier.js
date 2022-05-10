@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect } from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 import { useContractRead, useAccount, erc20ABI } from 'wagmi'
 import cashierAbi from '../abis/cashier.json'
 import BuyForm from './Cashier/BuyForm'
@@ -23,7 +23,7 @@ const Cashier = () => {
     userChips.refetch()
     userUsdc.refetch()
     setUpdateValues(false)
-  }, [updateValues])
+  }, [chainData, account])
 
   const cashierUsdc = useContractRead(
     {
@@ -86,53 +86,76 @@ const Cashier = () => {
 
   return (
     <Container>
-      <DataContainer>
-        <Data>
-          <h2>TotalChips in Circulation</h2>
-          <h1>{chainData.totalChips} Chips</h1>
-        </Data>
+      <DataRow>
+        <Label>Total Chips in Circulation</Label>
+        <Content>{chainData.totalChips} CHIP</Content>
+      </DataRow>
 
-        <Data>
-          <h2>Your CHIPS in Wallet</h2>
-          {account.data ? <h1>{chainData.userChips} CHIPS</h1> : <h1>????</h1>}
-        </Data>
-        <Data>
-          <BuyForm userUsdc={userUsdc} updateValues={updateFunction} />
-        </Data>
-      </DataContainer>
-      <DataContainer>
-        <Data>
-          <h2>USDC in the Cashier</h2>
-          <h1>{chainData.cashierUsdc} USDC</h1>
-        </Data>
-        <Data>
-          <h2>USDC in Wallet</h2>
-          {account.data ? <h1>{chainData.userUsdc} USDC</h1> : <h1>????</h1>}
-        </Data>
-        <Data>
-          <SellForm userChips={userChips} updateValues={updateFunction} />
-        </Data>
-      </DataContainer>
+      <DataRow>
+        <Label>USDC in the Cashier</Label>
+        <Content>{chainData.cashierUsdc} USDC </Content>
+      </DataRow>
+      
+      <DataRow>
+        <Label>Your CHIP in Wallet</Label>
+        <Content>{account.data ? `${chainData.userChips} CHIP` : `????`}</Content>
+      </DataRow>
+
+      <DataRow>
+        <Label>Your USDC in Wallet</Label>
+        <Content>{account.data ? `${chainData.userUsdc} USDC`: "????"}</Content>
+      </DataRow>
+
+      <DataRow>
+        <Label>Buy CHIP with USDC</Label>
+        <Content><BuyForm userUsdc={userUsdc} updateValues={updateFunction} /></Content>  
+      </DataRow>
+
+      <DataRow>
+        <Label>Sell CHIP for USDC</Label>
+        <Content><SellForm userChips={userChips} updateValues={updateFunction} /></Content>
+      </DataRow>
     </Container>
   )
 }
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  justify-content: center;
+const Container = tw.div`
+  flex
+  flex-col
+
+  px-5
+  py-10
+  mx-24
+  my-10
+  border
 `
-const DataContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  margin: 5rem;
+const DataRow = tw.div`
+  flex
+  flex-row
+
+  px-3
+  py-2
+  odd:bg-gray-200
+  items-center
 `
-const Data = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+const Label = tw.div`
+  justify-self-start
+  flex-auto
+
+  uppercase 
+  font-mono
+  text-sm
+  font-semibold
+  tracking-wide
+  text-slate-500
+`
+
+const Content = tw.div`
+  justify-self-end
+  
+  text-lg
+  text-gray-700
+  font-bold
 `
 
 export default Cashier

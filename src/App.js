@@ -39,10 +39,10 @@ function App() {
             rpc: { [chain.id]: rpcUrl },
           },
         }),
-        new InjectedConnector({
-          chains,
-          options: { name: 'Injected' },
-        }),
+        // new InjectedConnector({
+        //   chains,
+        //   options: { name: 'Injected' },
+        // }),
       ]
     },
     provider() {

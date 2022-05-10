@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 import { erc20ABI, useContractWrite, useProvider } from 'wagmi'
 import { BigNumber } from 'ethers'
 import cashierAbi from '../../abis/cashier.json'
@@ -136,8 +136,7 @@ const BuyForm = ({ userUsdc, updateValues }) => {
   )
 
   return (
-    <>
-      <h2>Buy CHIPS with USDC</h2>
+    <Container>
       <Input
         type='number'
         onChange={(e) => onInputChange(e)}
@@ -167,21 +166,45 @@ const BuyForm = ({ userUsdc, updateValues }) => {
       {status === 'success' && (
         <div style={{ color: 'green' }}>Transaction was a success!</div>
       )}
-    </>
+    </Container>
   )
 }
 
-const Input = styled.input`
-  font-size: 1.2rem;
-  line-height: 2em;
+const Container = tw.div`
+  flex
+  flex-row
 `
-const Button = styled.button`
-  color: white;
-  background: #4786ff;
-  border: 1px solid #4786ff;
-  border-radius: 5px;
-  font-size: 2em;
-  margin-top: 0.5em;
+
+const Input = tw.input`
+  my-1
+  mx-3
+  px-3 
+  py-1
+  bg-white 
+  border 
+  shadow-sm
+  border-slate-300
+  placeholder-slate-400
+  focus:outline-none 
+  focus:border-sky-500 
+  focus:ring-sky-500 
+  block 
+  w-full 
+  rounded-md 
+  focus:ring-1
+  
+`
+const Button = tw.button`
+  my-1
+  flex-none
+  w-32
+  rounded-md
+  bg-green-700
+  hover:bg-green-600
+
+  text-slate-200
+  hover:text-white
+  font-bold
 `
 
 export default BuyForm

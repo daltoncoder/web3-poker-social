@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import tw from 'tailwind-styled-components'
 import { useConnect } from 'wagmi'
 
 const WalletModal = ({ setShowModal }) => {
@@ -18,39 +18,67 @@ const WalletModal = ({ setShowModal }) => {
   console.log(connectors)
   return (
     <Container onClick={() => setShowModal(false)}>
-      <Window onClick={(e) => e.stopPropagation()}>
-        {connectors.map((x) => (
-          <Button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>
-            {x.name}
-            {isConnecting && pendingConnector?.id === x.id && ' (connecting)'}
-          </Button>
-        ))}
-        {error && <div>{error.message}</div>}
-      </Window>
+        <Window onClick={(e) => e.stopPropagation()}>
+          <div class="flex flex-col items-center py-5 px-3">
+            {connectors.map((x) => (
+              <Button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>
+                {x.name}
+                {isConnecting && pendingConnector?.id === x.id && ' (connecting)'}
+              </Button>
+            ))}
+          </div>
+        </Window>
+      {error && <div>{error.message}</div>}
     </Container>
   )
 }
 
-const Container = styled.div`
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
-  background: rgba(0, 0, 0, 0.35);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const Container = tw.div`
+  fixed 
+  inset-0
+
+  flex
+  justify-center
+
+  bg-gray-500
+  bg-opacity-75
+  transition-opacity
 `
-const Window = styled.div``
-const Button = styled.button`
-  color: white;
-  background-color: #ff7a00;
-  font-size: 1.5em;
-  padding: 0.8em;
-  margin-right: 5%;
-  border: 1px solid #ff7a00;
-  border-radius: 5px;
+const Window = tw.div`
+  relative
+
+  mt-48
+  w-96
+  h-fit
+
+  flex
+  flex-col
+  justify-center
+  border-2
+  border-slate-600
+  
+  text-center
+  bg-gray-900
+  rounded-lg
+
+  `
+
+const Button = tw.button`
+
+  w-full
+  bg-gray-600
+  rounded-md
+  
+  mx-2
+  my-1
+  px-3
+  py-2
+
+  
+  font-semibold
+  text-white
+  hover:bg-gray-500
+
 `
 
 export default WalletModal
